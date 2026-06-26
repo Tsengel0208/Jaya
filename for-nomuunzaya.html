@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Nomuunzaya</title>
+<style>
+  :root {
+    --sky-top: #fff4d6;
+    --sky-bottom: #ffe2b0;
+    --petal: #ffc93c;
+    --petal-dark: #f5a623;
+    --center: #6b4226;
+    --leaf: #5a8f3b;
+    --leaf-dark: #3f6b28;
+    --heart: #ffd23f;
+    --heart-dark: #f4b400;
+    --text: #5a3e1b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-bottom) 100%);
+    font-family: Georgia, 'Times New Roman', serif;
+    position: relative;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  }
+
+  .stage {
+    position: relative;
+    width: min(92vw, 480px);
+    padding: 48px 24px 32px;
+    text-align: center;
+  }
+
+  .message {
+    font-size: clamp(20px, 4.5vw, 28px);
+    color: var(--text);
+    letter-spacing: 0.3px;
+    margin: 0 0 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 2.6s forwards;
+  }
+
+  .submessage {
+    font-size: clamp(13px, 2.6vw, 15px);
+    color: var(--text);
+    opacity: 0;
+    font-style: italic;
+    margin: 0 0 6px;
+    animation: fadeUp 1s ease-out 3.1s forwards;
+  }
+
+  .hint {
+    font-size: 12px;
+    color: var(--text);
+    opacity: 0;
+    margin: 0 0 28px;
+    animation: fadeUp 1s ease-out 3.6s forwards, pulseHint 2s ease-in-out 4.6s infinite;
+  }
+
+  .inline-duck {
+    display: inline-block;
+    width: 34px;
+    height: 31px;
+    vertical-align: -6px;
+    margin-left: 4px;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 2.6s forwards, duckWiggle 2s ease-in-out 3.6s infinite;
+    transform-origin: 50% 90%;
+  }
+
+  @keyframes duckWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+  }
+
+  @keyframes pulseHint {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
+
+  .garden {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  .heart-wrap {
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 70px;
+    opacity: 0;
+    animation: heartBloom 1.1s cubic-bezier(.2,.9,.3,1.2) 1.7s forwards;
+  }
+
+  .heart-beat {
+    width: 100%;
+    height: 100%;
+    animation: beat 1.8s ease-in-out 2.9s infinite;
+    transform-origin: 50% 60%;
+  }
+
+  .flower {
+    position: absolute;
+    bottom: 0;
+    width: 150px;
+    transform-origin: bottom center;
+    opacity: 0;
+  }
+
+  .flower.left {
+    left: 14%;
+    animation: riseLeft 1.1s ease-out 0.3s forwards, swayLeft 4.5s ease-in-out 1.4s infinite;
+  }
+
+  .flower.right {
+    right: 14%;
+    width: 165px;
+    animation: riseRight 1.1s ease-out 0.55s forwards, swayRight 4.8s ease-in-out 1.65s infinite;
+  }
+
+  .ground {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    background: linear-gradient(to bottom, rgba(90,143,59,0.25), rgba(90,143,59,0));
+    border-radius: 50%;
+  }
+
+  @keyframes riseLeft {
+    from { opacity: 0; transform: translateY(40px) rotate(-12deg) scale(0.85); }
+    to   { opacity: 1; transform: translateY(0) rotate(-6deg) scale(1); }
+  }
+  @keyframes riseRight {
+    from { opacity: 0; transform: translateY(40px) rotate(12deg) scale(0.85); }
+    to   { opacity: 1; transform: translateY(0) rotate(7deg) scale(1); }
+  }
+  @keyframes swayLeft {
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(-10deg); }
+  }
+  @keyframes swayRight {
+    0%, 100% { transform: rotate(7deg); }
+    50% { transform: rotate(11deg); }
+  }
+  @keyframes heartBloom {
+    0% { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.4); }
+    60% { opacity: 1; transform: translateX(-50%) translateY(-4px) scale(1.12); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
+  @keyframes beat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.12); }
+    30% { transform: scale(0.98); }
+    45% { transform: scale(1.08); }
+    60% { transform: scale(1); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .petal-glow {
+    filter: drop-shadow(0 6px 10px rgba(245,166,35,0.25));
+  }
+
+  /* --- Cat overlay --- */
+  .cat-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(90, 62, 27, 0.0);
+    pointer-events: none;
+    opacity: 0;
+    z-index: 50;
+    transition: background 0.25s ease, opacity 0.25s ease;
+  }
+
+  .cat-overlay.show {
+    opacity: 1;
+    background: rgba(60, 40, 15, 0.35);
+    pointer-events: auto;
+  }
+
+  .cat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.3) translateY(40px);
+    opacity: 0;
+  }
+
+  .cat-overlay.show .cat-box {
+    animation: catPop 0.55s cubic-bezier(.3,1.4,.4,1) forwards;
+  }
+
+  @keyframes catPop {
+    0% { transform: scale(0.3) translateY(40px); opacity: 0; }
+    70% { transform: scale(1.08) translateY(-6px); opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .cat-svg {
+    width: 180px;
+    height: 180px;
+    animation: catDance 0.5s ease-in-out infinite;
+  }
+
+  @keyframes catDance {
+    0%, 100% { transform: rotate(-8deg) translateY(0); }
+    50% { transform: rotate(8deg) translateY(-10px); }
+  }
+
+  .scubaaa-text {
+    margin-top: 14px;
+    font-family: Arial Black, Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(28px, 8vw, 46px);
+    color: #fff;
+    letter-spacing: 1px;
+    -webkit-text-stroke: 2px var(--heart-dark);
+    text-shadow: 0 4px 0 var(--heart-dark), 0 6px 14px rgba(0,0,0,0.3);
+    animation: textWobble 0.4s ease-in-out infinite;
+  }
+
+  @keyframes textWobble {
+    0%, 100% { transform: scale(1) rotate(-2deg); }
+    50% { transform: scale(1.06) rotate(2deg); }
+  }
+
+  .cat-close-hint {
+    margin-top: 18px;
+    font-size: 13px;
+    color: #fff;
+    opacity: 0.85;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="garden">
+
+    <div class="heart-wrap">
+      <svg class="heart-beat" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 88
+                 C 18 64, 2 42, 14 24
+                 C 24 9, 44 9, 50 28
+                 C 56 9, 76 9, 86 24
+                 C 98 42, 82 64, 50 88 Z"
+              fill="var(--heart)" stroke="var(--heart-dark)" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <svg class="flower left petal-glow" viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 200 C 95 240, 90 270, 70 300" stroke="var(--leaf-dark)" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M100 230 C 130 235, 150 250, 165 240" stroke="var(--leaf)" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="158" cy="235" rx="22" ry="11" fill="var(--leaf)" transform="rotate(20 158 235)"/>
+      <path d="M100 200 C 70 195, 55 180, 60 165" stroke="var(--leaf)" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="58" cy="160" rx="20" ry="10" fill="var(--leaf-dark)" transform="rotate(-30 58 160)"/>
+      <line x1="100" y1="110" x2="100" y2="300" stroke="var(--leaf-dark)" stroke-width="8" stroke-linecap="round"/>
+      <g>
+        <g fill="var(--petal)">
+          <ellipse cx="100" cy="55" rx="14" ry="34"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(30 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(60 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(90 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(120 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(150 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(180 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(210 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(240 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(270 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(300 100 90)"/>
+          <ellipse cx="100" cy="55" rx="14" ry="34" transform="rotate(330 100 90)"/>
+        </g>
+        <circle cx="100" cy="90" r="34" fill="var(--center)"/>
+        <circle cx="100" cy="90" r="34" fill="url(#seedsLeft)" opacity="0.5"/>
+      </g>
+      <defs>
+        <radialGradient id="seedsLeft">
+          <stop offset="0%" stop-color="#8a5a30"/>
+          <stop offset="100%" stop-color="#5a3a1e"/>
+        </radialGradient>
+      </defs>
+    </svg>
+
+    <svg class="flower right petal-glow" viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
+      <path d="M100 200 C 105 240, 110 270, 130 300" stroke="var(--leaf-dark)" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M100 230 C 70 235, 50 250, 35 240" stroke="var(--leaf)" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="42" cy="235" rx="22" ry="11" fill="var(--leaf)" transform="rotate(-20 42 235)"/>
+      <path d="M100 195 C 130 190, 145 175, 140 160" stroke="var(--leaf)" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="142" cy="155" rx="20" ry="10" fill="var(--leaf-dark)" transform="rotate(30 142 155)"/>
+      <line x1="100" y1="105" x2="100" y2="300" stroke="var(--leaf-dark)" stroke-width="8" stroke-linecap="round"/>
+      <g>
+        <g fill="var(--petal-dark)">
+          <ellipse cx="100" cy="48" rx="15" ry="37"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(30 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(60 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(90 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(120 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(150 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(180 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(210 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(240 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(270 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(300 100 85)"/>
+          <ellipse cx="100" cy="48" rx="15" ry="37" transform="rotate(330 100 85)"/>
+        </g>
+        <circle cx="100" cy="85" r="37" fill="var(--center)"/>
+        <circle cx="100" cy="85" r="37" fill="url(#seedsRight)" opacity="0.5"/>
+      </g>
+      <defs>
+        <radialGradient id="seedsRight">
+          <stop offset="0%" stop-color="#8a5a30"/>
+          <stop offset="100%" stop-color="#5a3a1e"/>
+        </radialGradient>
+      </defs>
+    </svg>
+
+    <div class="ground"></div>
+  </div>
+
+  <p class="message">For Nomuunzaya
+    <svg class="inline-duck" viewBox="0 0 100 90" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="48" cy="58" rx="34" ry="26" fill="#ffe566"/>
+      <circle cx="74" cy="34" r="20" fill="#ffe566"/>
+      <ellipse cx="40" cy="66" rx="20" ry="9" fill="#ffd23f" opacity="0.6"/>
+      <path d="M90 32 L106 28 L106 38 Z" fill="#f4a93c"/>
+      <circle cx="80" cy="28" r="2.6" fill="#3a2a14"/>
+      <path d="M30 78 L24 88 L34 88 Z" fill="#f4a93c"/>
+      <path d="M46 78 L40 88 L50 88 Z" fill="#f4a93c"/>
+    </svg>
+  </p>
+  <p class="submessage">just a little something to make you smile 👉👈</p>
+  <p class="hint">(tap anywhere)</p>
+</div>
+
+<div class="cat-overlay" id="catOverlay">
+  <div class="cat-box">
+    <svg class="cat-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="120" rx="62" ry="50" fill="#f2b66d"/>
+      <path d="M55 95 L40 55 L78 80 Z" fill="#f2b66d"/>
+      <path d="M145 95 L160 55 L122 80 Z" fill="#f2b66d"/>
+      <path d="M58 90 L48 65 L72 82 Z" fill="#e89a4a"/>
+      <path d="M142 90 L152 65 L128 82 Z" fill="#e89a4a"/>
+      <circle cx="100" cy="110" r="48" fill="#f7c889"/>
+      <ellipse cx="76" cy="100" rx="17" ry="20" fill="#fff" stroke="#3a2a14" stroke-width="3"/>
+      <ellipse cx="124" cy="100" rx="17" ry="20" fill="#fff" stroke="#3a2a14" stroke-width="3"/>
+      <circle cx="76" cy="103" r="8" fill="#2b4d8f"/>
+      <circle cx="124" cy="103" r="8" fill="#2b4d8f"/>
+      <circle cx="79" cy="100" r="2.4" fill="#fff"/>
+      <circle cx="127" cy="100" r="2.4" fill="#fff"/>
+      <path d="M93 100 Q100 96 107 100" stroke="#3a2a14" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="100" cy="128" rx="9" ry="7" fill="#e8769a"/>
+      <path d="M100 134 Q100 142 92 145" stroke="#3a2a14" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M100 134 Q100 142 108 145" stroke="#3a2a14" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <line x1="62" y1="122" x2="20" y2="118" stroke="#3a2a14" stroke-width="2"/>
+      <line x1="62" y1="130" x2="18" y2="132" stroke="#3a2a14" stroke-width="2"/>
+      <line x1="138" y1="122" x2="180" y2="118" stroke="#3a2a14" stroke-width="2"/>
+      <line x1="138" y1="130" x2="182" y2="132" stroke="#3a2a14" stroke-width="2"/>
+      <path d="M50 165 Q40 180 55 188 Q70 192 78 178" fill="#5da8d6" stroke="#2b4d8f" stroke-width="2"/>
+      <path d="M150 165 Q160 180 145 188 Q130 192 122 178" fill="#5da8d6" stroke="#2b4d8f" stroke-width="2"/>
+      <path d="M60 165 C40 178, 130 195, 160 168" fill="none" stroke="#2b4d8f" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+    <div class="scubaaa-text">SCUBAAA</div>
+    <div class="cat-close-hint">(tap again to close)</div>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('catOverlay');
+  document.body.addEventListener('click', function (e) {
+    overlay.classList.toggle('show');
+  });
+</script>
+
+</body>
+</html>
